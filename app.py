@@ -7,6 +7,7 @@ from leaderboard import Leaderboard
 from ranking_lock import RankingLock
 from giveaway_manager import GiveawayManager
 from governance_nft_distributor import GovernanceNFTDistributor
+from doug import Brought
 
 app = Flask(__name__)
 
@@ -90,6 +91,3 @@ def confirm_nft_deposit():
 
 @app.route('/nft/withdraw', methods=['POST'])
 def withdraw_nft():
-    data = request.get_json()
-    unique_code = data['unique_code']
-   

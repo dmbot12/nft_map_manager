@@ -30,13 +30,93 @@ To complete the project, you'll need to:
     Implement the user interface to allow users to view the leaderboard, connect their blockchain addresses, and claim their NFT prizes.
     Test the application thoroughly to ensure it functions correctly and securely.
 
-Potential Improvements
+Map Time Limit
 
-    Add support for more blockchains and NFT platforms to broaden the application's reach and user base.
-    Implement a more sophisticated prize distribution mechanism, such as tiered rewards or time-limited giveaways.
-    Enhance the user interface with real-time updates, notifications, and rich visualizations of the leaderboard and user holdings.
-    Integrate with social media platforms to allow users to share their achievements and encourage further participation in the NFT ecosystem.
+The application will have a time when the rankings will close. When the time is reached the ranks are set. Users can still pass NFTs into the holding accounts to claim land but their rank will be set. Rank determines the order in which they will enter the map and claim land. Rank also determines if they receive a Governor NFT on Algorand. This award will happen at the time the rankings close. The reward for these governor NFTs are as follows:
 
-Other Notes
+When the map closes, we will send a special Governance City Block to the highest ranking users according the the outline below.
 
-This readme file provides a high-level overview of the Ible City NFT Leaderboard and Giveaway project. When implementing the application, pay close attention to the individual components and their connections, and ensure that the system is secure and reliable. The code snippets provided in this conversation are meant as starting points for building the full solution, and further development and testing are required to create a complete and functioning application.
+Rank #1 to rank #8 receive a Diamond City Block and are part of the High Council
+Rank #9 to rank #38 receive a Gold City Block and are part of the Senate
+Rank #39 to rank #118 receive a Silver City Block and are part of the General Assembly
+
+We need to show the user how many Ible City NFTs and Ible City Block NFTs are needed to reach each level of governance using the same modulo 70 routine that we did for the next closest rank calculation.
+
+Requirements
+
+2) Determine if the core requirements listed below are implemented
+(2a) Manage users by their unique_code
+(2b) Allow users to connect their blockchain wallet from the Algorand, Ethereum, Polygon, or VeChain blockchains to prove ownership of a blockchain account
+(2c) Record ownership of the blockchain account in the database, attributing it to the unique_code
+(2d) Allow the user to select a blockchain to deposit NFT assets listed in our code to special holding accounts on the Algorand, Ethereum, Polygon, or VeChain blockchains owned by the application. Ensure that the user has connected at least one blockchain account and attributed it to the database before proceeding to showing them the holding account where they will send the assets
+(2e) Have the user select the asset type and amount in the account they have connected to send to the holding account
+(2f) Once they have selected the account, type, and amount of NFTs build the transaction for the user. Note that the user can select more than one type of asset to send to the holding account if it is on the same blockchain (example: The user has 3 Ible City Series I and 4 Ible City Series III NFTs on the Algorand blockchain - allow them to select all of both these assets to transfer to the Algorand holding account)
+(2g) Present the transaction to the user so that they can sign for the transaction in their wallet - note this is accomplished since the user has already connected their wallet. The wallet connections for each blockchain are Algorand (Pera Wallet Connection, Defly Wallet Connection, WalletConnect), Ethereum (Metamask, WalletConnect), Polygon (Metamask, WalletConnect), and VeChain (Sync2, Sync with VeChain Thor)
+(2h) Monitor for the transaction to the holding accounts on each chain and, when a transaction occurs, note the sender account and update the user table with the appropriate value given the transfer of NFTs
+(2i) Create a leaderboard where we keep track of each users total value deposited into the holding accounts on all blockchains
+(2j) Present the confirmed assets deposited to the user along with the transaction ID
+(2k) Present the current rank of the user based on the value of the NFTs they have deposited into the holding accounts
+(2l) Present the amount of NFTs the user would need to deposit to reach the next highest level using the modulo 70 formula
+(2m) Display whether the user is eligible for a governance NFT based on their current rank and, if so, what NFT they will receive when the time to confirm the rankings is reached
+(2n) Display the minimum amount of NFTs needed to receive a Silver, Gold, or Diamond governance NFT based on the users current holdings. Use the modulo 70 calculation for this as well. If the user is already eligible for a governance NFT, only show the level above where they are (example: if they are already eligible for a Gold governance NFT, only show them the amount of NFTs they need to transfer to a holding account(s) in order to receive a diamond governance NFT instead)
+(2o) When the date and time is met for the ranking to enter the map, lock and confirm each users rank in the database connected to their unique code. Allow the developers to set this date and time after the application is launched (it does not have to be set when first launched)
+(2p) When the date and time is met for the ranking to enter the map, automatically award the governance NFTs that are being distributed according to rank in the application. Ensure that the distribution happens according to the table and that there is only one of these awarded to each unique_code for the top 118 users on the leaderboard.
+(2q) Run the Ible City governance block NFT giveaway where a prize is drawn for every 5,000 NFTs deposited (the milestones) based on the giveaway table laid out previously. This is not tied to the rank or time lock previously described but is it’s own initiative.
+(2r) Ensure that, if the number of Ible City Blocks goes below a milestone previously hit due to withdrawals, we do not accidentally award a prize again for a milestone that has already been met
+(2s) Pick the winner as soon as a milestone is reached and record it in the database. Ensure that each Ible City Block NFT deposited acts as a ticket for the drawing and that users can win multiple times, even with the same ticket. This contest is not tied to the countdown/rank process outlined earlier and is totally dependent upon the number of Ible City Block NFTs deposited into the holding accounts.
+(2t) Make a notation in the user database for a user when they win a prize. Ensure that a user can win multiple prizes before claiming a prize
+(2u) Ensure when a user that has won a prize enters the application, that a notification prompts them to select one of their Algorand accounts in the database to receive the governance NFT giveaway prize
+(2v) Ensure that, if the user does not have an Algorand account registered in the database, that they first must connect an Algorand wallet and confirm an account, written to the database, before the prize is distributed.
+(2w) Once the user confirms the Algorand account to win the prize by connecting the correct account, build a transaction and send the NFT prize or prizes to the recipient
+(2x) Allow for users to withdraw NFTs by first connecting an account that they have previously used to send NFTs to a holding account. This account must be present in the database for the user’s unique_code. Once confirmed, they select the type of NFT and amount of NFTs they want to receive back from the holding account. We build the transaction and send it back to the originating account. Please ensure that we do not send more NFTs than the user currently has credit for that particular blockchain and account (we must check the database)
+(2y) Update the database when a withdrawal request is completed to ensure that the count, type, number of NFTs, and value are all updated for accuracy
+
+
+Ible City Governance NFT Giveaway Table
+
+5000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+10000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+15000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+20000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+25000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+30000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+35000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+40000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+45000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+50000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+55000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+60000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+65000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+70000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+75000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+80000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+85000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+90000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+95000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+100000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+105000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+110000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+115000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+120000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+125000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+130000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+135000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+140000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+145000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+150000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+155000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+160000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+165000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+170000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
+175000 total Ible City Block NFTs sent to the holding accounts = 2 Silver Assembly
+180000 total Ible City Block NFTs sent to the holding accounts = 2 Silver Assembly
+185000 total Ible City Block NFTs sent to the holding accounts = 2 Silver Assembly
+190000 total Ible City Block NFTs sent to the holding accounts = 2 Gold Senate
+195000 total Ible City Block NFTs sent to the holding accounts = 2 Gold Senate
+200000 total Ible City Block NFTs sent to the holding accounts = 2 Gold Senate
+205000 total Ible City Block NFTs sent to the holding accounts = 2 Gold Senate
+210000 total Ible City Block NFTs sent to the holding accounts = 2 Gold Senate
+215000 total Ible City Block NFTs sent to the holding accounts = 1 Diamond High Council
+220000 total Ible City Block NFTs sent to the holding accounts = 1 Diamond High Council
+225000 total Ible City Block NFTs sent to the holding accounts = 1 Diamond High Council
+230000 total Ible City Block NFTs sent to the holding accounts = 1 Diamond High Council

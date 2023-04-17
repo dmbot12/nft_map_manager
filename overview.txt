@@ -72,6 +72,118 @@ Requirements
 (2y) Update the database when a withdrawal request is completed to ensure that the count, type, number of NFTs, and value are all updated for accuracy
 
 
+Notes on project
+
+Before the cutoff, we want to give people the ability to pull their claims out the holding accounts. The application holds the keys to all of the holding accounts so, when a request for return of NFTs is made, the application can build a transaction and send to the appropriate network to return the NFTs to the account from which it was sent. The user must first connect their wallet to the application to confirm ownership of the sender account and specify the type and number of NFTs they wish to have returned. We must then check to ensure this account has that number of NFTs present in the chosen holding account prior to building the transaction.
+
+The governance Ible City Block NFTs are all on the Algorand blockchain
+
+Diamond City Block:  ASA ID 1079869388
+Gold City Block: ASA ID 1079870494
+Silver City Block: ASA ID 1079871282
+
+the leaderboard is based solely on the value of the NFTs deposited into the holding account(s) on Algorand, Ethereum, Polygon, and VeChain from our original table below. The reward of governance NFTs when the time lock occurs for ranking is also based on the rank derived from the total value of each user's NFTs deposited into the holding account(s).  The reward structure is also posted below for reference.
+
+Algorand Assets:
+
+Asset Name: Ible City Series I
+Algorand ASA ID: 858025896
+Type: Full Plot
+Value: 70
+
+Asset Name: Ible City Series II
+Algorand ASA ID: 858046395
+Type: Full Plot
+Value: 70
+
+Asset Name: Ible City Series III
+Algorand ASA ID: 864213553
+Type: Full Plot
+Value: 70
+
+Asset Name: Ible City Series VI
+Algorand ASA ID: 1045288031
+Type: Full Plot
+Value: 70
+
+Asset Name: Ible City Blocks
+Algorand ASA ID: 1077130546
+Type: City Block
+Value: 1
+
+VeChain Asset:
+
+Asset Name: Ible City Series V
+VeChain Contract Address: 0x00b69FCAE6C00dBC9cce8c74ac4E093ba6E9C09C
+Type: Full Plot
+Value: 70
+
+Polygon Assets:
+
+Asset Name: Ible City Series IV
+Contract Address: 0x2953399124f0cbb46d2cbacd8a89cf0599974963
+Token ID: 79072312719121582140210694259731720223915337773247565504148748728040144505784
+Type: Full Plot
+Value: 70
+
+Asset Name: Polygon City Block
+Contract Address: 0x2953399124f0cbb46d2cbacd8a89cf0599974963
+Token ID: 79072312719121582140210694259731720223915337773247565504148748729139656165560
+Type: City Block
+Value: 1
+
+Ethereum Asset:
+
+Name: Ethereum City Block
+Contract address:  (not yet minted)
+Token ID:  (not yet minted)
+Type: City Block
+Value: 1
+
+
+---
+
+Governance City Block NFT reward distribution when the date/time lock are met in the application
+
+dmbrought@protonmail.com
+The current rank we have developed determines when the user enters the map.
+It also determines whether the user will be a governor in our virtual land.
+The first way someone can become a governor is by their rank.
+When the map closes, we will send a special Governance City Block to the highest ranking users according the the outline below.
+
+Rank #1 to rank #8 receive a Diamond City Block and are part of the High Council
+Rank #9 to rank #38 receive a Gold City Block and are part of the Senate
+Rank #39 to rank #118 receive a Silver City Block and are part of the General Assembly
+
+We want to display the current rank to the user. We also want to show them how many additional NFTs they would need to send to the holding account(s) in order to move to the next highest rank. 
+
+We want to give the user the simplest way to achieve this goal so we will use a modulo calculator in order to achieve this calculation. Since an Ible City NFT has a value of 70 and an Ible City Block NFT has a value of 1, we can use the modulo calculation a mod b = ? to find the correct combination of NFTs where b is 70.
+
+Example:
+
+The current user has 5 Ible City NFTs and 20 Ible City Block NFTs
+5 Ible City NFts (each with a value of 70) = 350
+20 Ible City Block NFTs (each with a value of 1) = 20
+so the user's current total value of NFTs sent to the holding account(s) = 370
+and the user's current rank is #340
+
+The next highest rank is #339 and the value held by the user with rank #339 is 450
+This means the current user needs to send enough NFTs to reach a value of 451
+The total value needed to reach this goal is (450-370) + 1 = 81
+
+Using mod 70 we have 81 mod 70 = 1 R11
+So we can let the current user know that they can send in 
+1 Ible City NFT and 11 Ible City Block NFTs to reach the next rank
+
+I need you to determine the best course of action to implement this code and then implement the code as lead programmer.
+
+We now want to ensure that, if a user wants to withdraw their NFTs from the holding account(s). For the UX, the user can click a button to initiate a return of assets to the originating account. They must select which network and then the address they previously confirmed as their account. They must then connect their wallet again to confirm ownership of that account. They then select the amount and type of NFTs they wish to return (which series and amount for the selected network) They then confirm their desire to have these returned From this point, as owner of the application and the possessor of the private keys for the holding account(s), we will build a transaction and submit this to the proper blockchain network to return the selected type and number of NFTs to the user. This must not exceed what was originally sent by the selected account address. As lead programmer, please review the requirements above and write the code necessary to implement this function.
+
+
+
+
+We have one more feature to account for in our project. There is a giveaway running concurrently with the ranking but they are not connected. The giveaway could end before or after the time lock happens for the map ranking. The giveaway is not time dependent but rather dependent upon the locking of Ible City Blocks.
+
 Ible City Governance NFT Giveaway Table
 
 5000 total Ible City Block NFTs sent to the holding accounts = 1 Silver Assembly
